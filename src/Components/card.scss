@@ -1,10 +1,5 @@
-.root {
-    display: flex;
-    flex-wrap: wrap;
-    & > * {
-        margin: 16px;
-        width: 128px;
-        height: 128px;
-    }
+.card {
+    padding: 16px;
     text-align: center;
+    height: 150px;
 }
