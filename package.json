@@ -4,12 +4,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.3",
+    "sass": "^1.32.8",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
@@ -17,10 +19,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/crgarcia8/findPairReact.git"
   },
   "eslintConfig": {
     "extends": [
@@ -41,9 +39,5 @@
     ]
   },
   "author": "Cristhian Garcia",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/crgarcia8/findPairReact/issues"
-  },
-  "homepage": "https://github.com/crgarcia8/findPairReact#readme"
+  "license": "ISC"
 }

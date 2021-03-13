@@ -1,0 +1,10 @@
+.root {
+    display: flex;
+    flex-wrap: wrap;
+    & > * {
+        margin: 16px;
+        width: 128px;
+        height: 128px;
+    }
+    text-align: center;
+}
