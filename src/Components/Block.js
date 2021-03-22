@@ -2,6 +2,7 @@ import React from 'react';
 import './Block.scss';
 import Paper from '@material-ui/core/Paper';
 
+
 export default function Block(props) {
   const { open, onClick, id, color } = props;
   return (
@@ -9,7 +10,8 @@ export default function Block(props) {
       id={id}
       key={id}
       onClick={onClick}
-      className={`block ${open && color}`}
+      className={`block`}
+      style={{ backgroundColor: open ? color : 'white' }}
       elevation={15} />
   );
 }

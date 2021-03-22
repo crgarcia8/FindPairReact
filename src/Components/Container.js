@@ -1,62 +1,50 @@
 import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
 import Block from './Block';
-
-const _data = [
-  { color: "blue", source: "1", selected: false, persist: false },
-  { color: "yellow", source: "2", selected: false, persist: false },
-  { color: "blue", source: "3", selected: false, persist: false },
-  { color: "orange", source: "4", selected: false, persist: false },
-  { color: "yellow", source: "5", selected: false, persist: false },
-  { color: "orange", source: "6", selected: false, persist: false }
-];
-
-let jugada1 = "";
-let jugada2 = "";
-let identificador1 = "";
-let identificador2 = "";
+import { _data } from '../Constants';
 
 export default function Container() {
   const [data, setData] = useState(_data);
   const [enabled, setEnabled] = useState(true);
-  // const [jugada1, setJugada1] = useState("");
-  // const [jugada2, setJugada2] = useState("");
-  // const [identificador1, setIdentificador1] = useState("");
-  // const [identificador2, setIdentificador2] = useState("");
+  const [time, setTime] = useState(0);
+  const [jugada1, setJugada1] = useState("");
+  const [jugada2, setJugada2] = useState("");
+  const [identificador1, setIdentificador1] = useState("");
 
   /**
    * Selection block
    * @param {object} item Selected Object 
    */
   const handleClick = (e, item) => {
-    jugada2 = e.target.id;
-    identificador2 = item.color;
+    if (jugada2 == e.target.id) return;
+    setTime(time + 1);
+    setJugada2(e.target.id)
     if (jugada1 != "") {
-      if (identificador1 == identificador2) {
-        // if (jugada1 === jugada2 && identificador1 !== identificador2 && data[identificador1].selected != true && data[identificador2].selected != true) {
+      if (identificador1 == item.color) {
         changeBackground(e, item, jugada1, true);
-        jugada1 = "";
-        jugada2 = "";
-        identificador1 = "";
-        identificador2 = "";
+        verifyWin();
       } else {
         changeBackground(e, item);
-        jugada1 = "";
-        jugada2 = "";
-        identificador1 = "";
-        identificador2 = "";
         setEnabled(false);
         setTimeout(() => {
           restartBlocks();
           setEnabled(true);
         }, 1000);
       }
+      setJugada1("");
+      setJugada2("");
+      setIdentificador1("");
     } else {
       changeBackground(e, item);
-      jugada1 = e.target.id;
-      identificador1 = identificador2;
+      setJugada1(e.target.id);
+      setIdentificador1(item.color);
     }
-    // verifySelected();
+  }
+  const verifyWin = () => {
+    const win = data.every(item => item.persist);
+    setTimeout(() => {
+      win && alert("Ganaste");
+    }, 500);
   }
 
   const changeBackground = (e, item, jugada = null, success = false) => {
@@ -68,23 +56,6 @@ export default function Container() {
       change[jugada].persist = true;
     }
     setData(change);
-  }
-  /**
-   * Verify 
-   */
-  const verifySelected = () => {
-    let items = data.filter(item => item.selected === true);
-    if (items.length > 1) {
-      if (items[0].color == items[1].color) {
-
-      } else {
-        setEnabled(false);
-        setTimeout(() => {
-          restartBlocks();
-          setEnabled(true);
-        }, 1000);
-      }
-    }
   }
   /**
    * Restart the selection 
@@ -102,14 +73,19 @@ export default function Container() {
    */
   const getCards = () => {
     return data.map((item, index) => (
-      <Grid item xs={3} key={index}>
+      <Grid item xs={2} key={index}>
         <Block id={index} color={item.color} open={item.selected} onClick={(e) => enabled && handleClick(e, item)} />
       </Grid>)
     )
   }
   return (
-    <Grid container spacing={3} justify="center">
-      {getCards()}
-    </Grid>
+    <>
+      <Grid container spacing={3} justify="flex-end">
+        <h1>Intentos: {time}</h1>
+      </Grid>
+      <Grid container spacing={3} justify="center">
+        {getCards()}
+      </Grid>
+    </>
   );
 }
