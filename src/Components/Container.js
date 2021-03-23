@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import Block from './Block';
 import { _data } from '../Constants';
+import Swal from 'sweetalert2';
 
 export default function Container() {
   const [data, setData] = useState(_data);
@@ -10,6 +11,13 @@ export default function Container() {
   const [jugada1, setJugada1] = useState("");
   const [jugada2, setJugada2] = useState("");
   const [identificador1, setIdentificador1] = useState("");
+  const [winner, setWinner] = useState(false);
+
+  useEffect(() => {
+    if (winner) {
+      showAlert();
+    }
+  }, [winner]);
 
   /**
    * Selection block
@@ -43,7 +51,7 @@ export default function Container() {
   const verifyWin = () => {
     const win = data.every(item => item.persist);
     setTimeout(() => {
-      win && alert("Ganaste");
+      win && setWinner(true);
     }, 500);
   }
 
@@ -77,6 +85,28 @@ export default function Container() {
         <Block id={index} color={item.color} open={item.selected} onClick={(e) => enabled && handleClick(e, item)} />
       </Grid>)
     )
+  }
+  const showAlert = () => {
+    Swal.fire({
+      title: 'GANASTE!',
+      text: '¿Quieres volver a intentarlo?',
+      icon: 'success',
+      confirmButtonText: 'Reiniciar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const items = [...data];
+        items.forEach((item) => {
+          item.persist = false;
+          item.selected = false;
+        });
+        setData(items);
+        setTime(0);
+        setJugada1("");
+        setJugada2("");
+        setIdentificador1("");
+        setWinner(false);
+      }
+    });
   }
   return (
     <>
