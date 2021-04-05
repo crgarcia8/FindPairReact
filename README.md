@@ -4,7 +4,7 @@ This is a personal project for create a game about find pairs
 
 ## Example Live 
 
-You can show this project live in [https://crgarcia8.github.io/findPairReact/](https://crgarcia8.github.io/findPairReact/)
+You can show this project live in [https://crgarcia8.github.io/FindPairReact/](https://crgarcia8.github.io/FindPairReact/)
 
 ## CSS
 
